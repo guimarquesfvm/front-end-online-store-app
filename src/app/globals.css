@@ -1,5 +1,9 @@
 :root {
   --border-radius: 12px;
+  --primary-bg: #FFFFFF;
+  --secondary-bg: #003BE5;
+  --secondary-text: #B0B3BB;
+  --primary-button: #2FC18C;
 }
 
 * {
