@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import { Epilogue } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/header'
+import StoreProvider from '@/context/StoreContext'
 
 const epilogue = Epilogue({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Front-End Online Store',
-  description: 'Buy products with Free Shipping on the same day at Mercado Libre. Find thousands of brands and products at incredible prices.',
+  description: 'MercadoLivre Clone',
 }
 
 export default function RootLayout({
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={epilogue.className}>
-        <Header />
-        {children}
+        <StoreProvider>
+          <Header />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   )

@@ -1,5 +1,9 @@
+import CategoriesBar from "@/components/categories-bar";
+
 export default function Home() {
   return (
-    <div></div>
+    <div>
+      <CategoriesBar />
+    </div>
   )
 }
