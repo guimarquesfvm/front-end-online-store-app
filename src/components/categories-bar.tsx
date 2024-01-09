@@ -1,13 +1,9 @@
 "use client";
 import StoreProvider, { StoreContext } from "@/context/StoreContext";
 import { useCategories } from "@/hooks/useCategories";
+import { CategoryType } from "@/types/category-type";
 import React, { useContext } from "react";
 import styled from "styled-components";
-
-type CategoryItem = {
-  id: number;
-  name: string;
-};
 
 const CategoryContainer = styled.aside`
   display: flex;
@@ -45,7 +41,7 @@ function CategoriesBar() {
       <h2>Categorias</h2>
       <hr />
       <CategoryList>
-        {categories?.map((category: CategoryItem) => (
+        {categories?.map((category: CategoryType) => (
           <li
             key={category.id}
             onClick={() => setSelectedCategory(category)}

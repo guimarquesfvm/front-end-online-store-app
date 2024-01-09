@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import SearchIcon from "./icons/search-icon"
+import { StoreContext } from "@/context/StoreContext"
+import { useContext } from "react"
 
 const SearchInputWithIcon = styled.div`
   display: flex;
@@ -26,9 +28,10 @@ const TagSearchInput = styled.input`
 `
 
 export default function SearchInput() {
+  const { setQuery } = useContext(StoreContext)
   return (
     <SearchInputWithIcon>
-      <TagSearchInput placeholder="Digite o que você busca"/>
+      <TagSearchInput placeholder="Digite o que você busca" onChange={(e) => setQuery(e.target.value)}/>
       <SearchIcon />
     </SearchInputWithIcon>
   )
