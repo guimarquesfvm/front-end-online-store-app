@@ -64,7 +64,6 @@ const NotFoundContainer = styled.div`
 function ProductsList() {
   const { query, selectedCategory } = useContext(StoreContext);
   const { products, isLoading } = useProducts(selectedCategory, query);
-  console.log(products);
   
   return (
     <ListContainer>

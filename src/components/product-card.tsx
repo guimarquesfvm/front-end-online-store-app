@@ -1,6 +1,8 @@
+import { StoreContext } from "@/context/StoreContext";
 import { formatPrice } from "@/helpers/formatPrice";
+import useProduct from "@/hooks/useProduct";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 
 interface ProductCardProps {
@@ -18,12 +20,12 @@ const ProductContainer = styled.div`
   gap: 12px;
   padding: 16px;
   text-align: center;
-  cursor: pointer;
-
+  
   width: 280px;
   height: auto;
-
+  
   img {
+    cursor: pointer;
     width: 100%;
     height: 100%;
   }
@@ -32,7 +34,7 @@ const ProductContainer = styled.div`
     padding: 14px 36px;
     background-color: var(--primary-button);
     border: none;
-
+    cursor: pointer;
     font-size: 16px;
     font-weight: 600;
     line-height: 16px;
@@ -47,18 +49,29 @@ const ProductContainer = styled.div`
 `
 
 function ProductCard(product: ProductCardProps) {
+  const { data } = useProduct(product.id);
+  const {cartItems, setCartItems} = useContext(StoreContext)
   const router = useRouter()
 
   const handleNavigateProduct = () => {
     router.push(`/product?id=${product.id}`)
   }
 
+  const handleAddToCart = () => {
+    const itemExists = cartItems.findIndex((item) => item.id === data?.id);
+    if (itemExists !== -1) {
+      return;
+    } else {
+      setCartItems([...cartItems, { ...data, quantity: 1 }]);
+    }
+  };
+
   return (
-    <ProductContainer onClick={() => handleNavigateProduct()}>
-      <img src={product.photo} alt="" />
+    <ProductContainer>
+      <img src={product.photo} alt="foto do produto" onClick={() => handleNavigateProduct()}/>
       <h4>{product.name}</h4>
       <h3>{formatPrice(product.price)}</h3>
-      <button>Adicionar ao carrinho</button>
+      <button onClick={() => handleAddToCart() }>Adicionar ao carrinho</button>
     </ProductContainer>
   );
 }
