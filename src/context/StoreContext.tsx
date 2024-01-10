@@ -1,6 +1,7 @@
 "use client";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { CategoryType } from "@/types/category-type";
+import { ratingType } from "@/types/rating-type";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createContext, ReactNode, useState } from "react";
 
@@ -11,6 +12,8 @@ interface StoreContextType {
   setQuery: (query: string) => void;
   cartItems: any[];
   setCartItems: React.Dispatch<React.SetStateAction<any>>;
+  ratings: ratingType[];
+  setRatings: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export const StoreContext = createContext<StoreContextType>({} as StoreContextType);
@@ -23,6 +26,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>({name: "", id: 0});
   const [query, setQuery] = useState<string>("");
   const [cartItems, setCartItems] = useLocalStorage("cart-items", []);
+  const [ratings, setRatings] = useLocalStorage("ratings", []);
 
   const queryClient = new QueryClient();
   return (
@@ -34,7 +38,9 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
           query,
           setQuery,
           cartItems,
-          setCartItems
+          setCartItems,
+          ratings,
+          setRatings
         }}
       >
         {children}

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import RatingStar from "@/components/icons/rating-star";
 import { formatPrice } from "@/helpers/formatPrice";
 import { StoreContext } from "@/context/StoreContext";
+import RatingCard from "@/components/rating-card";
 
 interface Props {
   searchParams: {
@@ -70,7 +71,7 @@ const Container = styled.div`
         display: flex;
         flex-direction: column;
         gap: 8px;
-        
+
         ul {
           color: var(--infos-text);
           font-size: 16px;
@@ -152,7 +153,7 @@ const Container = styled.div`
         justify-content: center;
         width: 100%;
         gap: 16px;
-  
+
         > div {
           display: flex;
           gap: 8px;
@@ -164,20 +165,19 @@ const Container = styled.div`
               color: var(--secondary-text);
             }
           }
-  
+
           ul {
             display: flex;
             align-items: center;
             gap: 8px;
             list-style: none;
-  
+
             li {
               cursor: pointer;
             }
           }
-
         }
-  
+
         textarea {
           width: 488px;
           height: 152px;
@@ -189,7 +189,6 @@ const Container = styled.div`
             color: var(--secondary-text);
           }
         }
-
       }
       button {
         padding: 16px 96px;
@@ -242,8 +241,11 @@ const Container = styled.div`
 
 function Page({ searchParams }: Props) {
   const { data, isLoading } = useProduct(searchParams.id);
-  const {cartItems, setCartItems} = useContext(StoreContext);
+  const { cartItems, setCartItems, ratings, setRatings } =
+    useContext(StoreContext);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+  const productRatings = ratings.filter((rating) => rating.id === data?.id);
 
   const handleFavorite = () => {
     const itemExists = cartItems.findIndex((item) => item.id === data?.id);
@@ -252,21 +254,20 @@ function Page({ searchParams }: Props) {
       newCart[itemExists].quantity += selectedQuantity;
       setCartItems(newCart);
     } else {
-      setCartItems([...cartItems, {...data, quantity: selectedQuantity}]);
+      setCartItems([...cartItems, { ...data, quantity: selectedQuantity }]);
     }
-  }
+  };
 
   const handleQuantity = (operation: string) => {
-    if (operation === '+') {
+    if (operation === "+") {
       setSelectedQuantity(selectedQuantity + 1);
-    }
-    else if (operation === '-') {
+    } else if (operation === "-") {
       if (selectedQuantity === 1) {
         return;
       }
       setSelectedQuantity(selectedQuantity - 1);
     }
-  }
+  };
 
   return (
     <Container>
@@ -294,11 +295,14 @@ function Page({ searchParams }: Props) {
             <div className="handle-cart-container">
               <h2>{formatPrice(data?.price)}</h2>
               <div className="handle-quantity-container">
-                <button onClick={() => handleQuantity('-')}>-</button>
+                <button onClick={() => handleQuantity("-")}>-</button>
                 <span>{selectedQuantity}</span>
-                <button onClick={() => handleQuantity('+')}>+</button>
+                <button onClick={() => handleQuantity("+")}>+</button>
               </div>
-              <button className="add-to-cart-btn" onClick={() => handleFavorite()}>
+              <button
+                className="add-to-cart-btn"
+                onClick={() => handleFavorite()}
+              >
                 Adicionar ao Carrinho
               </button>
             </div>
@@ -312,57 +316,40 @@ function Page({ searchParams }: Props) {
             <div>
               <input type="email" placeholder="Email" />
               <ul>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
+                <li>
+                  <RatingStar.NotFilled />
+                </li>
+                <li>
+                  <RatingStar.NotFilled />
+                </li>
+                <li>
+                  <RatingStar.NotFilled />
+                </li>
+                <li>
+                  <RatingStar.NotFilled />
+                </li>
+                <li>
+                  <RatingStar.NotFilled />
+                </li>
               </ul>
             </div>
-            <textarea name="" id="" placeholder="Mensagem (opcional)"></textarea>
+            <textarea
+              name=""
+              id=""
+              placeholder="Mensagem (opcional)"
+            ></textarea>
           </div>
           <button>Avaliar</button>
         </section>
         <section className="ratings-section">
-          <div className="rating-card">
-            <div>
-              <h2>foo@bar.com</h2>
-              <ul>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-              </ul>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
-          </div>
-          <div className="rating-card">
-            <div>
-              <h2>foo@bar.com</h2>
-              <ul>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-              </ul>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
-          </div>
-          <div className="rating-card">
-            <div>
-              <h2>foo@bar.com</h2>
-              <ul>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-                <li><RatingStar.NotFilled /></li>
-              </ul>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.</p>
-          </div>
+          {productRatings?.map((rating) => (
+            <RatingCard
+              key={rating.id}
+              email={rating.email}
+              stars={rating.stars}
+              message={rating.message}
+            />
+          ))}
         </section>
       </div>
     </Container>
