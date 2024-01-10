@@ -1,6 +1,7 @@
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { useContext } from "react";
 import Cart from "./icons/cart";
 import styled from "styled-components";
+import { StoreContext } from "@/context/StoreContext";
 
 const CartContainer = styled.div`
   position: relative;
@@ -18,7 +19,7 @@ const CartCount = styled.span`
 `;
 
 function CartControl() {
-  const [cartItems] = useLocalStorage("cart-items", []);
+  const {cartItems} = useContext(StoreContext);
 
   return (
     <CartContainer>

@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useContext, useState } from "react";
 import useProduct from "@/hooks/useProduct";
 import BackBtnIcon from "@/components/icons/back-btn";
 import styled from "styled-components";
 import RatingStar from "@/components/icons/rating-star";
 import { formatPrice } from "@/helpers/formatPrice";
+import { StoreContext } from "@/context/StoreContext";
 
 interface Props {
   searchParams: {
@@ -236,6 +237,31 @@ const Container = styled.div`
 
 function Page({ searchParams }: Props) {
   const { data, isLoading } = useProduct(searchParams.id);
+  const {cartItems, setCartItems} = useContext(StoreContext);
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
+
+  const handleFavorite = () => {
+    const itemExists = cartItems.findIndex((item) => item.id === data?.id);
+    const newCart = cartItems;
+    if (itemExists !== -1) {
+      newCart[itemExists].quantity += selectedQuantity;
+      setCartItems(newCart);
+    } else {
+      setCartItems([...cartItems, {...data, quantity: selectedQuantity}]);
+    }
+  }
+
+  const handleQuantity = (operation: string) => {
+    if (operation === '+') {
+      setSelectedQuantity(selectedQuantity + 1);
+    }
+    else if (operation === '-') {
+      if (selectedQuantity === 1) {
+        return;
+      }
+      setSelectedQuantity(selectedQuantity - 1);
+    }
+  }
 
   return (
     <Container>
@@ -263,11 +289,13 @@ function Page({ searchParams }: Props) {
             <div className="handle-cart-container">
               <h2>{formatPrice(data?.price)}</h2>
               <div className="handle-quantity-container">
-                <button>-</button>
-                <span>0</span>
-                <button>+</button>
+                <button onClick={() => handleQuantity('-')}>-</button>
+                <span>{selectedQuantity}</span>
+                <button onClick={() => handleQuantity('+')}>+</button>
               </div>
-              <button className="add-to-cart-btn">Adicionar ao Carrinho</button>
+              <button className="add-to-cart-btn" onClick={() => handleFavorite()}>
+                Adicionar ao Carrinho
+              </button>
             </div>
           </div>
         </section>
