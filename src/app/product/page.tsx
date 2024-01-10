@@ -190,7 +190,7 @@ const Container = styled.div`
           }
         }
       }
-      button {
+      .submit-rating {
         padding: 16px 96px;
         background-color: var(--primary-button);
         border: none;
@@ -198,6 +198,12 @@ const Container = styled.div`
         color: white;
         font-size: 16px;
         font-weight: bold;
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          pointer-events: none;
+        }
       }
     }
 
@@ -244,6 +250,12 @@ function Page({ searchParams }: Props) {
   const { cartItems, setCartItems, ratings, setRatings } =
     useContext(StoreContext);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [userRating, setUserRating] = useState({
+    id: data?.id,
+    stars: 0,
+    email: "",
+    message: "",
+  });
 
   const productRatings = ratings.filter((rating) => rating.id === data?.id);
 
@@ -268,6 +280,20 @@ function Page({ searchParams }: Props) {
       setSelectedQuantity(selectedQuantity - 1);
     }
   };
+
+  const handleRating = (rating: number) => {
+    setUserRating({ ...userRating, stars: rating });
+  };
+
+  const handleSubmitRating = () => {
+    setRatings([...ratings, userRating]);
+    setUserRating({
+      id: data?.id,
+      stars: 0,
+      email: "",
+      message: "",
+    });
+  }
 
   return (
     <Container>
@@ -314,22 +340,49 @@ function Page({ searchParams }: Props) {
           <h2>Avaliações</h2>
           <div className="rating-container">
             <div>
-              <input type="email" placeholder="Email" />
+              <input
+                type="email"
+                placeholder="Email"
+                value={userRating.email}
+                onChange={(e) =>
+                  setUserRating({ ...userRating, email: e.target.value })
+                }
+              />
               <ul>
-                <li>
-                  <RatingStar.NotFilled />
+                <li onClick={() => handleRating(1)}>
+                  {userRating.stars >= 1 ? (
+                    <RatingStar.Filled />
+                  ) : (
+                    <RatingStar.NotFilled />
+                  )}
                 </li>
-                <li>
-                  <RatingStar.NotFilled />
+                <li onClick={() => handleRating(2)}>
+                  {userRating.stars >= 2 ? (
+                    <RatingStar.Filled />
+                  ) : (
+                    <RatingStar.NotFilled />
+                  )}
                 </li>
-                <li>
-                  <RatingStar.NotFilled />
+                <li onClick={() => handleRating(3)}>
+                  {userRating.stars >= 3 ? (
+                    <RatingStar.Filled />
+                  ) : (
+                    <RatingStar.NotFilled />
+                  )}
                 </li>
-                <li>
-                  <RatingStar.NotFilled />
+                <li onClick={() => handleRating(4)}>
+                  {userRating.stars >= 4 ? (
+                    <RatingStar.Filled />
+                  ) : (
+                    <RatingStar.NotFilled />
+                  )}
                 </li>
-                <li>
-                  <RatingStar.NotFilled />
+                <li onClick={() => handleRating(5)}>
+                  {userRating.stars >= 5 ? (
+                    <RatingStar.Filled />
+                  ) : (
+                    <RatingStar.NotFilled />
+                  )}
                 </li>
               </ul>
             </div>
@@ -337,14 +390,18 @@ function Page({ searchParams }: Props) {
               name=""
               id=""
               placeholder="Mensagem (opcional)"
+              value={userRating.message}
+              onChange={(e) =>setUserRating({ ...userRating, message: e.target.value })}
             ></textarea>
           </div>
-          <button>Avaliar</button>
+          <button className="submit-rating" disabled={userRating.stars === 0} onClick={() => handleSubmitRating()}>
+            Avaliar
+          </button>
         </section>
         <section className="ratings-section">
-          {productRatings?.map((rating) => (
+          {productRatings?.map((rating, i) => (
             <RatingCard
-              key={rating.id}
+              key={i}
               email={rating.email}
               stars={rating.stars}
               message={rating.message}
