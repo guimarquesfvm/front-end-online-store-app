@@ -87,6 +87,7 @@ function ProductsList() {
             name={product.title}
             price={product.price}
             photo={product.thumbnail}
+            id={product.id}
           />
         ))
       )}

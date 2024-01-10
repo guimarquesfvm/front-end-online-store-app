@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Logo from "./icons/logo";
 import SearchInput from "./search-input";
 import CartControl from "./cart-control";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   
@@ -28,11 +29,19 @@ const CartWrapper = styled.div`
 `
 
 export default function Header(props: HeaderProps) {
+  const router = useRouter();
+  const handleNavigateHome = () => {
+    router.push("/")
+  }
+  const handleNavigateCart = () => {
+    router.push("/cart")
+  }
+
   return (
     <TagHeader>
       <InputWrapper><SearchInput /></InputWrapper>
-      <LogoWrapper><Logo /></LogoWrapper>
-      <CartWrapper><CartControl /></CartWrapper>
+      <LogoWrapper onClick={() => handleNavigateHome()}><Logo /></LogoWrapper>
+      <CartWrapper onClick={() => handleNavigateCart()}><CartControl /></CartWrapper>
     </TagHeader>
   )
 }

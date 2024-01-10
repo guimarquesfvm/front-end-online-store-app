@@ -7,6 +7,7 @@ import RatingStar from "@/components/icons/rating-star";
 import { formatPrice } from "@/helpers/formatPrice";
 import { StoreContext } from "@/context/StoreContext";
 import RatingCard from "@/components/rating-card";
+import { useRouter } from "next/navigation";
 
 interface Props {
   searchParams: {
@@ -259,7 +260,7 @@ function Page({ searchParams }: Props) {
 
   const productRatings = ratings.filter((rating) => rating.id === data?.id);
 
-  const handleFavorite = () => {
+  const handleAddToCart = () => {
     const itemExists = cartItems.findIndex((item) => item.id === data?.id);
     const newCart = cartItems;
     if (itemExists !== -1) {
@@ -286,7 +287,7 @@ function Page({ searchParams }: Props) {
   };
 
   const handleSubmitRating = () => {
-    setRatings([...ratings, userRating]);
+    setRatings([...ratings, {...userRating, id: data?.id}]);
     setUserRating({
       id: data?.id,
       stars: 0,
@@ -294,11 +295,15 @@ function Page({ searchParams }: Props) {
       message: "",
     });
   }
+  const router = useRouter();
 
+  const handleNavigateHome = () => {
+    router.push("/");
+  }
   return (
     <Container>
       <main>
-        <button className="back-btn">
+        <button className="back-btn" onClick={() => handleNavigateHome()}>
           <BackBtnIcon />
           Voltar
         </button>
@@ -327,7 +332,7 @@ function Page({ searchParams }: Props) {
               </div>
               <button
                 className="add-to-cart-btn"
-                onClick={() => handleFavorite()}
+                onClick={() => handleAddToCart()}
               >
                 Adicionar ao Carrinho
               </button>
