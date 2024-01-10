@@ -1,3 +1,4 @@
+import { formatPrice } from "@/helpers/formatPrice";
 import React from "react";
 import styled from "styled-components";
 
@@ -40,7 +41,7 @@ function ProductCard(product: ProductCardProps) {
     <ProductContainer>
       <img src={product.photo} alt="" />
       <h4>{product.name}</h4>
-      <h3>{product.price}</h3>
+      <h3>{formatPrice(product.price)}</h3>
       <button>Adicionar ao carrinho</button>
     </ProductContainer>
   );

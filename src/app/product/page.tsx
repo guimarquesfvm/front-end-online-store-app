@@ -4,6 +4,7 @@ import useProduct from "@/hooks/useProduct";
 import BackBtnIcon from "@/components/icons/back-btn";
 import styled from "styled-components";
 import RatingStar from "@/components/icons/rating-star";
+import { formatPrice } from "@/helpers/formatPrice";
 
 interface Props {
   searchParams: {
@@ -260,7 +261,7 @@ function Page({ searchParams }: Props) {
               </ul>
             </div>
             <div className="handle-cart-container">
-              <h2>{data?.price}</h2>
+              <h2>{formatPrice(data?.price)}</h2>
               <div className="handle-quantity-container">
                 <button>-</button>
                 <span>0</span>
