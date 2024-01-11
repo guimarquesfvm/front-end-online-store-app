@@ -405,7 +405,7 @@ function Page({ searchParams }: Props) {
           </div>
           <button
             className="submit-rating"
-            disabled={userRating.stars === 0}
+            disabled={userRating.stars === 0 || userRating.email === ""}
             onClick={() => handleSubmitRating()}
           >
             Avaliar
