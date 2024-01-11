@@ -14,6 +14,8 @@ interface StoreContextType {
   setCartItems: React.Dispatch<React.SetStateAction<any>>;
   ratings: ratingType[];
   setRatings: React.Dispatch<React.SetStateAction<any>>;
+  cartTotal: any;
+  setCartTotal: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export const StoreContext = createContext<StoreContextType>({} as StoreContextType);
@@ -27,6 +29,7 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
   const [query, setQuery] = useState<string>("");
   const [cartItems, setCartItems] = useLocalStorage("cart-items", []);
   const [ratings, setRatings] = useLocalStorage("ratings", []);
+  const [cartTotal, setCartTotal] = useState(0);
 
   const queryClient = new QueryClient();
   return (
@@ -40,7 +43,9 @@ const StoreProvider = ({ children }: StoreProviderProps) => {
           cartItems,
           setCartItems,
           ratings,
-          setRatings
+          setRatings,
+          cartTotal,
+          setCartTotal
         }}
       >
         {children}
