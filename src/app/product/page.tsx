@@ -26,107 +26,6 @@ const Container = styled.div`
   main {
     padding: 24px 40px;
   }
-  .back-btn {
-    background-color: transparent;
-    border: none;
-    color: var(--primary-button);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-bottom: 24px;
-  }
-
-  .photo-and-info-section {
-    display: flex;
-    gap: 40px;
-    width: 100%;
-
-    .photo-and-name-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-around;
-      width: 50%;
-      max-width: 580px;
-      border-radius: 24px;
-      box-shadow: 0px 0px 48px rgba(0, 0, 0, 0.25);
-      padding: 36px;
-      img {
-        width: 100%;
-      }
-    }
-
-    .infos-and-cart-container {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-between;
-      width: 50%;
-
-      gap: 16px;
-
-      .infos-container {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-
-        ul {
-          color: var(--infos-text);
-          font-size: 16px;
-        }
-      }
-
-      .handle-cart-container {
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        width: 100%;
-
-        .handle-quantity-container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-
-          button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 28px;
-            color: var(--secondary-text);
-          }
-
-          span {
-            font-size: 16px;
-            font-weight: bold;
-            line-height: 16px;
-            color: white;
-            background-color: var(--secondary-text);
-            height: 24px;
-            width: 24px;
-            padding: 5px;
-            text-align: center;
-            border-radius: 50%;
-            display: inline-block;
-          }
-        }
-
-        .add-to-cart-btn {
-          padding: 16px 36px;
-          background-color: var(--primary-button);
-          border: none;
-          color: white;
-          font-size: 16px;
-          font-weight: 600;
-          line-height: 16px;
-          cursor: pointer;
-        }
-      }
-    }
-  }
 
   .rating-background {
     background-color: var(--rating-bg);
@@ -137,117 +36,220 @@ const Container = styled.div`
     flex-direction: column;
     padding: 28px 40px;
     gap: 40px;
-    .rating-section {
+  }
+`;
+
+const BackButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: var(--primary-button);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+`;
+
+const ProductDetails = styled.section`
+  display: flex;
+  gap: 40px;
+  width: 100%;
+`;
+
+const ProductImageAndName = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+  max-width: 580px;
+  border-radius: 24px;
+  box-shadow: 0px 0px 48px rgba(0, 0, 0, 0.25);
+  padding: 36px;
+  img {
+    width: 100%;
+  }
+`;
+
+const ProductInfoAndCartHandlers = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 50%;
+
+  gap: 16px;
+`;
+
+const InfosContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  ul {
+    color: var(--infos-text);
+    font-size: 16px;
+  }
+`;
+
+const CartHandlers = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+
+  .handle-quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 28px;
+      color: var(--secondary-text);
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 16px;
+      color: white;
+      background-color: var(--secondary-text);
+      height: 24px;
+      width: 24px;
+      padding: 5px;
+      text-align: center;
+      border-radius: 50%;
+      display: inline-block;
+    }
+  }
+
+  .add-to-cart-btn {
+    padding: 16px 36px;
+    background-color: var(--primary-button);
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    cursor: pointer;
+  }
+`;
+
+const RatingForm = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: white;
+  gap: 12px;
+  padding: 32px;
+
+  .rating-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 16px;
+
+    > div {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      background-color: white;
-      gap: 12px;
-      padding: 32px;
-
-      .rating-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        gap: 16px;
-
-        > div {
-          display: flex;
-          gap: 8px;
-          input {
-            width: 325px;
-            padding: 8px;
-            border: 1px solid var(--secondary-text);
-            ::placeholder {
-              color: var(--secondary-text);
-            }
-          }
-
-          ul {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            list-style: none;
-
-            li {
-              cursor: pointer;
-            }
-          }
-        }
-
-        textarea {
-          width: 488px;
-          height: 152px;
-          border: 1px solid var(--secondary-text);
-          resize: none;
-          font-family: inherit;
-          padding: 8px;
-          ::placeholder {
-            color: var(--secondary-text);
-          }
+      gap: 8px;
+      input {
+        width: 325px;
+        padding: 8px;
+        border: 1px solid var(--secondary-text);
+        ::placeholder {
+          color: var(--secondary-text);
         }
       }
-      .submit-rating {
-        padding: 16px 96px;
-        background-color: var(--primary-button);
-        border: none;
-        cursor: pointer;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
 
-        &:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-          pointer-events: none;
+      ul {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        list-style: none;
+
+        li {
+          cursor: pointer;
         }
       }
     }
 
-    .ratings-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      gap: 8px;
-
-      .rating-card {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        background-color: white;
-        width: 100%;
-        padding: 28px 54px;
-        gap: 16px;
-
-        div {
-          display: flex;
-          align-items: center;
-          gap: 76px;
-        }
-        ul {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          list-style: none;
-        }
-
-        p {
-          color: var(--secondary-text);
-        }
+    textarea {
+      width: 488px;
+      height: 152px;
+      border: 1px solid var(--secondary-text);
+      resize: none;
+      font-family: inherit;
+      padding: 8px;
+      ::placeholder {
+        color: var(--secondary-text);
       }
+    }
+  }
+  .submit-rating {
+    padding: 16px 96px;
+    background-color: var(--primary-button);
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+`;
+
+const RatingsList = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
+
+  .rating-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+    padding: 28px 54px;
+    gap: 16px;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 76px;
+    }
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+
+    p {
+      color: var(--secondary-text);
     }
   }
 `;
 
 function Page({ searchParams }: Props) {
-  const { data, isLoading } = useProduct(searchParams.id);
+  const { data } = useProduct(searchParams.id);
   const { cartItems, setCartItems, ratings, setRatings } =
     useContext(StoreContext);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -287,33 +289,33 @@ function Page({ searchParams }: Props) {
   };
 
   const handleSubmitRating = () => {
-    setRatings([...ratings, {...userRating, id: data?.id}]);
+    setRatings([...ratings, { ...userRating, id: data?.id }]);
     setUserRating({
       id: data?.id,
       stars: 0,
       email: "",
       message: "",
     });
-  }
+  };
   const router = useRouter();
 
   const handleNavigateHome = () => {
     router.push("/");
-  }
+  };
   return (
     <Container>
       <main>
-        <button className="back-btn" onClick={() => handleNavigateHome()}>
+        <BackButton onClick={() => handleNavigateHome()}>
           <BackBtnIcon />
           Voltar
-        </button>
-        <section className="photo-and-info-section">
-          <div className="photo-and-name-container">
+        </BackButton>
+        <ProductDetails>
+          <ProductImageAndName>
             <h2>{data?.title}</h2>
             <img src={data?.thumbnail} alt="foto do produto" />
-          </div>
-          <div className="infos-and-cart-container">
-            <div className="infos-container">
+          </ProductImageAndName>
+          <ProductInfoAndCartHandlers>
+            <InfosContainer>
               <h2>Especificações técnicas</h2>
               <ul>
                 {data?.attributes?.map((att: any) => (
@@ -322,8 +324,8 @@ function Page({ searchParams }: Props) {
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="handle-cart-container">
+            </InfosContainer>
+            <CartHandlers>
               <h2>{formatPrice(data?.price)}</h2>
               <div className="handle-quantity-container">
                 <button onClick={() => handleQuantity("-")}>-</button>
@@ -336,12 +338,12 @@ function Page({ searchParams }: Props) {
               >
                 Adicionar ao Carrinho
               </button>
-            </div>
-          </div>
-        </section>
+            </CartHandlers>
+          </ProductInfoAndCartHandlers>
+        </ProductDetails>
       </main>
       <div className="rating-background">
-        <section className="rating-section">
+        <RatingForm>
           <h2>Avaliações</h2>
           <div className="rating-container">
             <div>
@@ -396,14 +398,20 @@ function Page({ searchParams }: Props) {
               id=""
               placeholder="Mensagem (opcional)"
               value={userRating.message}
-              onChange={(e) =>setUserRating({ ...userRating, message: e.target.value })}
+              onChange={(e) =>
+                setUserRating({ ...userRating, message: e.target.value })
+              }
             ></textarea>
           </div>
-          <button className="submit-rating" disabled={userRating.stars === 0} onClick={() => handleSubmitRating()}>
+          <button
+            className="submit-rating"
+            disabled={userRating.stars === 0}
+            onClick={() => handleSubmitRating()}
+          >
             Avaliar
           </button>
-        </section>
-        <section className="ratings-section">
+        </RatingForm>
+        <RatingsList>
           {productRatings?.map((rating, i) => (
             <RatingCard
               key={i}
@@ -412,7 +420,7 @@ function Page({ searchParams }: Props) {
               message={rating.message}
             />
           ))}
-        </section>
+        </RatingsList>
       </div>
     </Container>
   );
