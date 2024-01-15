@@ -29,12 +29,24 @@ const CategoryList = styled.ul`
     font-weight: 400;
     color: var(--category-text);
     cursor: pointer;
+
+    &:hover {
+      font-weight: 600;
+    }
+  }
+
+  .selected-category {
+    &:hover {
+      font-weight: 800;
+    }
+    font-weight: 800;
+    color: var(--primary-button);
   }
 `;
 
 function CategoriesBar() {
   const { categories } = useCategories();
-  const { setSelectedCategory } = useContext(StoreContext);
+  const { setSelectedCategory, selectedCategory } = useContext(StoreContext);
 
   return (
     <CategoryContainer>
@@ -45,6 +57,7 @@ function CategoriesBar() {
           <li
             key={category.id}
             onClick={() => setSelectedCategory(category)}
+            className={selectedCategory?.id === category.id ? "selected-category" : ""}
           >
             {category.name}
           </li>

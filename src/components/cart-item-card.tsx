@@ -13,6 +13,18 @@ const CartItemContainer = styled.div`
   width: 100%;
   gap: 16px;
   border-top: 1px solid var(--secondary-text);
+  flex-direction: column;
+
+  .column-card-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  @media (min-width: ${({ theme }) => theme.largeScreenBreakpoint}) {
+    flex-direction: row;
+  }
 `;
 
 const RemoveBtn = styled.button`
@@ -79,17 +91,21 @@ function CartItem({ item }: { item: ProductType }) {
   
   return (
     <CartItemContainer>
-      <RemoveBtn onClick={() => handleRemoveItem()}>
-        <RemoveCartItem />
-      </RemoveBtn>
-      <img src={item.thumbnail} alt="" />
-      <h4>{item.title}</h4>
-      <QuantityHandler>
-        <button onClick={() => handleQuantity("-")}>-</button>
-        <span>{itemQuantity}</span>
-        <button onClick={() => handleQuantity("+")}>+</button>
-      </QuantityHandler>
-      <h4>{formatPrice(item.price)}</h4>
+      <div className="column-card-container">
+        <RemoveBtn onClick={() => handleRemoveItem()}>
+          <RemoveCartItem />
+        </RemoveBtn>
+        <img src={item.thumbnail} alt="" />
+        <h4>{item.title}</h4>
+      </div>
+      <div className="column-card-container">
+        <QuantityHandler>
+          <button onClick={() => handleQuantity("-")}>-</button>
+          <span>{itemQuantity}</span>
+          <button onClick={() => handleQuantity("+")}>+</button>
+        </QuantityHandler>
+        <h4>{formatPrice(item.price)}</h4>
+      </div>
     </CartItemContainer>
   );
 }

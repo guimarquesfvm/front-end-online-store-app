@@ -1,6 +1,7 @@
 "use client";
 import CartItem from "@/components/cart-item-card";
 import BackBtnIcon from "@/components/icons/back-btn";
+import PrimaryButton from "@/components/primary-button";
 import { StoreContext } from "@/context/StoreContext";
 import { formatPrice } from "@/helpers/formatPrice";
 import { useRouter } from "next/navigation";
@@ -41,10 +42,14 @@ const CartItemsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 36px 36px;
   width: 50%;
-  padding: 36px 89px;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
   gap: 16px;
+  
+  @media (min-width: ${({ theme }) => theme.largeScreenBreakpoint}) {
+    padding: 36px 89px;
+  }
 `;
 
 const SaleTotalContainer = styled.div`
@@ -53,17 +58,13 @@ const SaleTotalContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 50%;
+  gap: 16px;
 
-  button {
-    margin-top: 64px;
-    padding: 16px 36px;
-    background-color: var(--primary-button);
-    border: none;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 16px;
-    cursor: pointer;
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -112,9 +113,11 @@ function Page() {
               ))}
             </CartItemsContainer>
             <SaleTotalContainer>
-              <h2>Valor total da compra:</h2>
-              <h2>{formatPrice(cartTotal)}</h2>
-              <button onClick={() => handleNavigateCheckout()}>Finalizar compra</button>
+              <div>
+                <h2>Valor total da compra:</h2>
+                <h2>{formatPrice(cartTotal)}</h2>
+              </div>
+              <PrimaryButton handler={handleNavigateCheckout} title="Finalizar compra"/>
             </SaleTotalContainer>
           </>
         </MainWrapper>

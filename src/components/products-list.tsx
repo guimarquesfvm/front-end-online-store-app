@@ -10,8 +10,12 @@ const ListContainer = styled.ul`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 28px;
+  gap: 8px;
   flex-grow: 1;
+  
+  @media (min-width : ${({ theme }) => theme.desktopBreakpoint}) {
+    gap: 28px;
+  }
 `;
 
 const NoSearchContainer = styled.div`

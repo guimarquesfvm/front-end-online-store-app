@@ -4,7 +4,14 @@ import { ProductType } from "@/types";
 import { CategoryType } from "@/types/category-type";
 import { ratingType } from "@/types/rating-type";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
+import { ThemeProvider } from "styled-components";
 
 interface StoreContextType {
   selectedCategory: CategoryType;
@@ -19,38 +26,51 @@ interface StoreContextType {
   setCartTotal: Dispatch<SetStateAction<number>>;
 }
 
-export const StoreContext = createContext<StoreContextType>({} as StoreContextType);
+export const StoreContext = createContext<StoreContextType>(
+  {} as StoreContextType
+);
 
 interface StoreProviderProps {
   children: ReactNode;
 }
 
 const StoreProvider = ({ children }: StoreProviderProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>({name: "", id: 0});
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>({
+    name: "",
+    id: 0,
+  });
   const [query, setQuery] = useState<string>("");
   const [cartItems, setCartItems] = useLocalStorage("cartItems", []);
   const [ratings, setRatings] = useLocalStorage("ratings", []);
   const [cartTotal, setCartTotal] = useState(0);
 
   const queryClient = new QueryClient();
+  const theme = {
+    desktopBreakpoint: "1024px",
+    largeScreenBreakpoint: "1280px",
+    mediumScreenBreakpoint: "968px",
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
-      <StoreContext.Provider
-        value={{
-          selectedCategory,
-          setSelectedCategory,
-          query,
-          setQuery,
-          cartItems,
-          setCartItems,
-          ratings,
-          setRatings,
-          cartTotal,
-          setCartTotal
-        }}
-      >
-        {children}
-      </StoreContext.Provider>
+      <ThemeProvider theme={theme}>
+        <StoreContext.Provider
+          value={{
+            selectedCategory,
+            setSelectedCategory,
+            query,
+            setQuery,
+            cartItems,
+            setCartItems,
+            ratings,
+            setRatings,
+            cartTotal,
+            setCartTotal,
+          }}
+        >
+          {children}
+        </StoreContext.Provider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

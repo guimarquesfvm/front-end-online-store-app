@@ -5,6 +5,7 @@ import BoletoIcon from "@/components/icons/boleto-icon";
 import IconElo from "@/components/icons/icon-elo";
 import IconMasterCard from "@/components/icons/icon-mastercard";
 import IconVisa from "@/components/icons/icon-visa";
+import PrimaryButton from "@/components/primary-button";
 import { StoreContext } from "@/context/StoreContext";
 import { formatPrice } from "@/helpers/formatPrice";
 import { useRouter } from "next/navigation";
@@ -68,22 +69,6 @@ const CheckoutUserDetails = styled.section`
   gap: 24px;
   padding: 56px;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
-
-  .finish-buy-btn {
-    padding: 16px 36px;
-    background-color: var(--primary-button);
-    border: none;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 16px;
-    cursor: pointer;
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-  }
 `;
 
 const CheckoutForm = styled.section`
@@ -375,14 +360,7 @@ function Page() {
               </div>
             </SelectPaymentContainer>
           </PaymentMethodContainer>
-
-          <button
-            className="finish-buy-btn"
-            onClick={() => handleFinishBuy()}
-            disabled={isDisabled()}
-          >
-            Comprar
-          </button>
+          <PrimaryButton title="Comprar" handler={() => handleFinishBuy()} disabled={isDisabled()}/>
         </CheckoutUserDetails>
       </MainWrapper>
     </Container>

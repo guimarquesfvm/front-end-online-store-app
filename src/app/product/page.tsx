@@ -9,6 +9,7 @@ import { StoreContext } from "@/context/StoreContext";
 import RatingCard from "@/components/rating-card";
 import { useRouter } from "next/navigation";
 import { Attribute } from "@/types/product-type";
+import PrimaryButton from "@/components/primary-button";
 
 interface Props {
   searchParams: {
@@ -26,6 +27,7 @@ const Container = styled.div`
 
   main {
     padding: 24px 40px;
+    width: 100%;
   }
 
   .rating-background {
@@ -57,6 +59,13 @@ const ProductDetails = styled.section`
   display: flex;
   gap: 40px;
   width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: ${(props) => props.theme.mediumScreenBreakpoint}) {
+    flex-direction: row;
+  }
 `;
 
 const ProductImageAndName = styled.div`
@@ -66,10 +75,17 @@ const ProductImageAndName = styled.div`
   justify-content: space-around;
   width: 50%;
   max-width: 580px;
+  min-width: 400px;
   border-radius: 24px;
   box-shadow: 0px 0px 48px rgba(0, 0, 0, 0.25);
   padding: 36px;
   img {
+    width: 100%;
+  }
+
+  @media (max-width: ${(props) => props.theme.mediumScreenBreakpoint}) {
+    max-width: none;
+    min-width: none;
     width: 100%;
   }
 `;
@@ -101,6 +117,19 @@ const CartHandlers = styled.div`
   justify-content: space-around;
   width: 100%;
 
+  .price-and-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+    gap: 24px;
+  }
+
+  @media (max-width: ${(props) => props.theme.desktopBreakpoint}) {
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .handle-quantity-container {
     display: flex;
     align-items: center;
@@ -128,17 +157,6 @@ const CartHandlers = styled.div`
       border-radius: 50%;
       display: inline-block;
     }
-  }
-
-  .add-to-cart-btn {
-    padding: 16px 36px;
-    background-color: var(--primary-button);
-    border: none;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 16px;
-    cursor: pointer;
   }
 `;
 
@@ -194,21 +212,6 @@ const RatingForm = styled.section`
       ::placeholder {
         color: var(--secondary-text);
       }
-    }
-  }
-  .submit-rating {
-    padding: 16px 96px;
-    background-color: var(--primary-button);
-    border: none;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      pointer-events: none;
     }
   }
 `;
@@ -305,7 +308,7 @@ function Page({ searchParams }: Props) {
   };
 
   const starsHandler = (star: number): any => {
-    if (userRating.stars >= star) return <RatingStar.Filled />
+    if (userRating.stars >= star) return <RatingStar.Filled />;
     return <RatingStar.NotFilled />;
   };
 
@@ -333,18 +336,15 @@ function Page({ searchParams }: Props) {
               </ul>
             </InfosContainer>
             <CartHandlers>
-              <h2>{formatPrice(data?.price)}</h2>
-              <div className="handle-quantity-container">
-                <button onClick={() => handleQuantity("-")}>-</button>
-                <span>{selectedQuantity}</span>
-                <button onClick={() => handleQuantity("+")}>+</button>
+              <div className="price-and-quantity">
+                <h2>{formatPrice(data?.price)}</h2>
+                <div className="handle-quantity-container">
+                  <button onClick={() => handleQuantity("-")}>-</button>
+                  <span>{selectedQuantity}</span>
+                  <button onClick={() => handleQuantity("+")}>+</button>
+                </div>
               </div>
-              <button
-                className="add-to-cart-btn"
-                onClick={() => handleAddToCart()}
-              >
-                Adicionar ao Carrinho
-              </button>
+              <PrimaryButton handler={() => handleAddToCart()} title="Adicionar ao carrinho"/>
             </CartHandlers>
           </ProductInfoAndCartHandlers>
         </ProductDetails>
@@ -380,13 +380,7 @@ function Page({ searchParams }: Props) {
               }
             ></textarea>
           </div>
-          <button
-            className="submit-rating"
-            disabled={userRating.stars === 0 || userRating.email === ""}
-            onClick={() => handleSubmitRating()}
-          >
-            Avaliar
-          </button>
+          <PrimaryButton handler={() => handleSubmitRating()} title="Avaliar" disabled={userRating.stars === 0 || userRating.email === ""}/>
         </RatingForm>
         <RatingsList>
           {productRatings?.map((rating, i) => (

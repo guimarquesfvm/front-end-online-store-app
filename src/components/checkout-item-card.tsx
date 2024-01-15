@@ -8,11 +8,24 @@ import { ProductType } from "@/types";
 
 const CartItemContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   gap: 16px;
   border-top: 1px solid var(--secondary-text);
+
+  .remove-btn-and-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+  }
+
+  @media (min-width: ${({ theme }) => theme.largeScreenBreakpoint}) {
+    flex-direction: row;
+  }
 `;
 
 const RemoveBtn = styled.button`
@@ -34,10 +47,12 @@ function CheckoutItemCard({ item }: { item: ProductType }) {
   
   return (
     <CartItemContainer>
-      <RemoveBtn onClick={() => handleRemoveItem()}>
-        <RemoveCartItem />
-      </RemoveBtn>
-      <img src={item.thumbnail} alt="" />
+      <div className="remove-btn-and-photo">
+        <RemoveBtn onClick={() => handleRemoveItem()}>
+          <RemoveCartItem />
+        </RemoveBtn>
+        <img src={item.thumbnail} alt="" />
+      </div>
       <h4>{item.title}</h4>
       <h4>{formatPrice(item.price)}</h4>
     </CartItemContainer>

@@ -5,6 +5,7 @@ import { ProductType } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import styled from "styled-components";
+import PrimaryButton from "./primary-button";
 
 interface ProductCardProps {
   product: ProductType;
@@ -19,7 +20,7 @@ const ProductContainer = styled.div`
   padding: 16px;
   text-align: center;
   
-  width: 280px;
+  width: 200px;
   height: auto;
   
   img {
@@ -28,21 +29,14 @@ const ProductContainer = styled.div`
     height: 100%;
   }
 
-  button {
-    padding: 14px 36px;
-    background-color: var(--primary-button);
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 16px;
-    color: white;
-  }
-
   &:hover {
     scale: 1.05;
     transition: 0.3s;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (min-width : ${({ theme }) => theme.desktopBreakpoint}) {
+    width: 280px;
   }
 `
 
@@ -69,7 +63,7 @@ function ProductCard({ product }: ProductCardProps) {
       <img src={product.thumbnail} alt="foto do produto" onClick={() => handleNavigateProduct()}/>
       <h4>{product.title}</h4>
       <h3>{formatPrice(product.price)}</h3>
-      <button onClick={() => handleAddToCart() }>Adicionar ao carrinho</button>
+      <PrimaryButton handler={() => handleAddToCart()} title="Adicionar ao carrinho"/>
     </ProductContainer>
   );
 }

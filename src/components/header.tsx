@@ -8,20 +8,38 @@ import { useRouter } from "next/navigation";
 const TagHeader = styled.header`
   display: flex;
   align-items: center;
+  padding: 4px 16px;
   justify-content: space-between;
-  padding: 16px 36px;
   background-color: var(--secondary-bg);
+  
+  @media (min-width: ${({ theme }) => theme.desktopBreakpoint}) {
+    padding: 16px 36px;
+  }
 `
 const InputWrapper = styled.div`
   cursor: pointer;
+  &:hover, &:focus-within, &:focus {
+    scale: 1.1;
+    transition: 0.3s;
+  }
 `
 
 const LogoWrapper = styled.div`
   cursor: pointer;
+
+  &:hover {
+    scale: 1.1;
+    transition: 0.3s;
+  }
 `
 
 const CartWrapper = styled.div`
   cursor: pointer;
+
+  &:hover {
+    scale: 1.1;
+    transition: 0.3s;
+  }
 `
 
 export default function Header() {
