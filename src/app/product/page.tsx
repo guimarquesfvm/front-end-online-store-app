@@ -8,6 +8,7 @@ import { formatPrice } from "@/helpers/formatPrice";
 import { StoreContext } from "@/context/StoreContext";
 import RatingCard from "@/components/rating-card";
 import { useRouter } from "next/navigation";
+import { Attribute } from "@/types/product-type";
 
 interface Props {
   searchParams: {
@@ -266,7 +267,7 @@ function Page({ searchParams }: Props) {
     const itemExists = cartItems.findIndex((item) => item.id === data?.id);
     const newCart = cartItems;
     if (itemExists !== -1) {
-      newCart[itemExists].quantity += selectedQuantity;
+      newCart[itemExists].quantity!! += selectedQuantity;
       setCartItems(newCart);
     } else {
       setCartItems([...cartItems, { ...data, quantity: selectedQuantity }]);
@@ -302,6 +303,12 @@ function Page({ searchParams }: Props) {
   const handleNavigateHome = () => {
     router.push("/");
   };
+
+  const starsHandler = (star: number): any => {
+    if (userRating.stars >= star) return <RatingStar.Filled />
+    return <RatingStar.NotFilled />;
+  };
+
   return (
     <Container>
       <main>
@@ -318,7 +325,7 @@ function Page({ searchParams }: Props) {
             <InfosContainer>
               <h2>Especificações técnicas</h2>
               <ul>
-                {data?.attributes?.map((att: any) => (
+                {data?.attributes?.map((att: Attribute) => (
                   <li key={att.id}>
                     {att.name}: {att.value_name}
                   </li>
@@ -356,41 +363,11 @@ function Page({ searchParams }: Props) {
                 }
               />
               <ul>
-                <li onClick={() => handleRating(1)}>
-                  {userRating.stars >= 1 ? (
-                    <RatingStar.Filled />
-                  ) : (
-                    <RatingStar.NotFilled />
-                  )}
-                </li>
-                <li onClick={() => handleRating(2)}>
-                  {userRating.stars >= 2 ? (
-                    <RatingStar.Filled />
-                  ) : (
-                    <RatingStar.NotFilled />
-                  )}
-                </li>
-                <li onClick={() => handleRating(3)}>
-                  {userRating.stars >= 3 ? (
-                    <RatingStar.Filled />
-                  ) : (
-                    <RatingStar.NotFilled />
-                  )}
-                </li>
-                <li onClick={() => handleRating(4)}>
-                  {userRating.stars >= 4 ? (
-                    <RatingStar.Filled />
-                  ) : (
-                    <RatingStar.NotFilled />
-                  )}
-                </li>
-                <li onClick={() => handleRating(5)}>
-                  {userRating.stars >= 5 ? (
-                    <RatingStar.Filled />
-                  ) : (
-                    <RatingStar.NotFilled />
-                  )}
-                </li>
+                <li onClick={() => handleRating(1)}>{starsHandler(1)}</li>
+                <li onClick={() => handleRating(2)}>{starsHandler(2)}</li>
+                <li onClick={() => handleRating(3)}>{starsHandler(3)}</li>
+                <li onClick={() => handleRating(4)}>{starsHandler(4)}</li>
+                <li onClick={() => handleRating(5)}>{starsHandler(5)}</li>
               </ul>
             </div>
             <textarea

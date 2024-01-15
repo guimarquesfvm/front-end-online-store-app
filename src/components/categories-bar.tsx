@@ -1,5 +1,5 @@
 "use client";
-import StoreProvider, { StoreContext } from "@/context/StoreContext";
+import { StoreContext } from "@/context/StoreContext";
 import { useCategories } from "@/hooks/useCategories";
 import { CategoryType } from "@/types/category-type";
 import React, { useContext } from "react";

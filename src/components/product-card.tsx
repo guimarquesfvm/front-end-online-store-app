@@ -1,15 +1,13 @@
 import { StoreContext } from "@/context/StoreContext";
 import { formatPrice } from "@/helpers/formatPrice";
 import useProduct from "@/hooks/useProduct";
+import { ProductType } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import styled from "styled-components";
 
 interface ProductCardProps {
-  name: string;
-  price: number;
-  photo: string;
-  id: string;
+  product: ProductType;
 }
 
 const ProductContainer = styled.div`
@@ -48,7 +46,7 @@ const ProductContainer = styled.div`
   }
 `
 
-function ProductCard(product: ProductCardProps) {
+function ProductCard({ product }: ProductCardProps) {
   const { data } = useProduct(product.id);
   const {cartItems, setCartItems} = useContext(StoreContext)
   const router = useRouter()
@@ -68,8 +66,8 @@ function ProductCard(product: ProductCardProps) {
 
   return (
     <ProductContainer>
-      <img src={product.photo} alt="foto do produto" onClick={() => handleNavigateProduct()}/>
-      <h4>{product.name}</h4>
+      <img src={product.thumbnail} alt="foto do produto" onClick={() => handleNavigateProduct()}/>
+      <h4>{product.title}</h4>
       <h3>{formatPrice(product.price)}</h3>
       <button onClick={() => handleAddToCart() }>Adicionar ao carrinho</button>
     </ProductContainer>

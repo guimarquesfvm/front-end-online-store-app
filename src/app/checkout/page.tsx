@@ -178,9 +178,9 @@ function Page() {
   };
 
   const isDisabled = () => {
-    const disabled = Object.values(checkoutInfo).some((value) => value === "")
+    const disabled = Object.values(checkoutInfo).some((value) => value === "");
     return disabled;
-  }
+  };
   return (
     <Container>
       <BackButton>
@@ -190,7 +190,7 @@ function Page() {
       <MainWrapper>
         <SaleWrapper>
           <ItemsReview>
-            {cartItems.map((item: any) => (
+            {cartItems.map((item) => (
               <CheckoutItemCard key={item.id} item={item} />
             ))}
           </ItemsReview>
@@ -376,7 +376,11 @@ function Page() {
             </SelectPaymentContainer>
           </PaymentMethodContainer>
 
-          <button className="finish-buy-btn" onClick={() => handleFinishBuy()} disabled={isDisabled()}>
+          <button
+            className="finish-buy-btn"
+            onClick={() => handleFinishBuy()}
+            disabled={isDisabled()}
+          >
             Comprar
           </button>
         </CheckoutUserDetails>

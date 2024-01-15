@@ -1,21 +1,22 @@
 "use client";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { ProductType } from "@/types";
 import { CategoryType } from "@/types/category-type";
 import { ratingType } from "@/types/rating-type";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 interface StoreContextType {
   selectedCategory: CategoryType;
   setSelectedCategory: (category: CategoryType) => void;
   query: string;
   setQuery: (query: string) => void;
-  cartItems: any[];
-  setCartItems: React.Dispatch<React.SetStateAction<any>>;
+  cartItems: ProductType[];
+  setCartItems: Dispatch<SetStateAction<any>>;
   ratings: ratingType[];
-  setRatings: React.Dispatch<React.SetStateAction<any>>;
-  cartTotal: any;
-  setCartTotal: React.Dispatch<React.SetStateAction<any>>;
+  setRatings: Dispatch<SetStateAction<any>>;
+  cartTotal: number;
+  setCartTotal: Dispatch<SetStateAction<number>>;
 }
 
 export const StoreContext = createContext<StoreContextType>({} as StoreContextType);
@@ -27,7 +28,7 @@ interface StoreProviderProps {
 const StoreProvider = ({ children }: StoreProviderProps) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>({name: "", id: 0});
   const [query, setQuery] = useState<string>("");
-  const [cartItems, setCartItems] = useLocalStorage("cart-items", []);
+  const [cartItems, setCartItems] = useLocalStorage("cartItems", []);
   const [ratings, setRatings] = useLocalStorage("ratings", []);
   const [cartTotal, setCartTotal] = useState(0);
 

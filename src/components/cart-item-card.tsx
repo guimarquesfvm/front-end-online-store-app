@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import RemoveCartItem from "./icons/remove-cart-item";
 import { StoreContext } from "@/context/StoreContext";
+import { ProductType } from "@/types";
 
 const CartItemContainer = styled.div`
   display: flex;
@@ -48,32 +49,32 @@ const QuantityHandler = styled.div`
     display: inline-block;
   }
 `;
-function CartItem({ item }: any) {
-  const { cartItems, setCartItems, setCartTotal } = useContext(StoreContext);
+function CartItem({ item }: { item: ProductType }) {
+  const { cartItems, setCartItems, setCartTotal, cartTotal } = useContext(StoreContext);
   const [itemQuantity, setItemQuantity] = useState(item.quantity);
 
-  const itemIndex = cartItems.findIndex((i: any) => i.id === item.id);
+  const itemIndex = cartItems.findIndex((i) => i.id === item.id);
 
   const handleQuantity = (operation: string) => {
     let newCartItems = cartItems;
     if (operation === "+") {
-      newCartItems[itemIndex].quantity += 1;
+      newCartItems[itemIndex].quantity!! += 1;
       setCartItems(newCartItems);
     }
     if (operation === "-") {
       if (newCartItems[itemIndex].quantity === 1) return;
-      newCartItems[itemIndex].quantity -= 1;
+      newCartItems[itemIndex].quantity!! -= 1;
       setCartItems(newCartItems);
     }
     setItemQuantity(newCartItems[itemIndex].quantity);
   }
 
   const handleRemoveItem = () => {
-    setCartItems([...cartItems].filter((i: any) => i.id !== item.id));
+    setCartItems([...cartItems].filter((i) => i.id !== item.id));
   }
 
   useEffect(() => {
-    setCartTotal(cartItems.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0));
+    setCartTotal(cartItems.reduce((acc: any, item) => acc + item.price * item.quantity!!, 0));
   })
   
   return (

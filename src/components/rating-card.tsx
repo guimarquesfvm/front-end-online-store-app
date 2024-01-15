@@ -3,29 +3,24 @@ import RatingStar from "./icons/rating-star";
 import { ratingType } from "@/types/rating-type";
 
 function RatingCard(rating: ratingType) {
+  const starsHandler = (star: number): any => {
+    if (rating.stars >= star) return <RatingStar.Filled />;
+    return <RatingStar.NotFilled />;
+  };
+
   return (
     <div className="rating-card">
       <div>
         <h2>{rating.email}</h2>
         <ul>
-          <li>
-            {rating.stars >= 1 ? <RatingStar.Filled /> : <RatingStar.NotFilled />}
-          </li>
-          <li>
-            {rating.stars >= 2 ? <RatingStar.Filled /> : <RatingStar.NotFilled />}
-          </li>
-          <li>
-            {rating.stars >= 3 ? <RatingStar.Filled /> : <RatingStar.NotFilled />}
-          </li>
-          <li>
-            {rating.stars >= 4 ? <RatingStar.Filled /> : <RatingStar.NotFilled />}
-          </li>
-          <li>
-            {rating.stars >= 5 ? <RatingStar.Filled /> : <RatingStar.NotFilled />}
-          </li>
+          <li>{starsHandler(1)}</li>
+          <li>{starsHandler(2)}</li>
+          <li>{starsHandler(3)}</li>
+          <li>{starsHandler(4)}</li>
+          <li>{starsHandler(5)}</li>
         </ul>
       </div>
-      {rating.message !== '' && <p>{rating.message}</p>}
+      {rating.message !== "" && <p>{rating.message}</p>}
     </div>
   );
 }

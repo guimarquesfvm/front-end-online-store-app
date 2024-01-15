@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import RemoveCartItem from "./icons/remove-cart-item";
 import { StoreContext } from "@/context/StoreContext";
+import { ProductType } from "@/types";
 
 const CartItemContainer = styled.div`
   display: flex;
@@ -20,46 +21,15 @@ const RemoveBtn = styled.button`
   cursor: pointer;
 `;
 
-const QuantityHandler = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 28px;
-    color: var(--secondary-text);
-  }
-
-  span {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 16px;
-    color: white;
-    background-color: var(--secondary-text);
-    height: 24px;
-    width: 24px;
-    padding: 5px;
-    text-align: center;
-    border-radius: 50%;
-    display: inline-block;
-  }
-`;
-function CheckoutItemCard({ item }: any) {
+function CheckoutItemCard({ item }: { item: ProductType }) {
   const { cartItems, setCartItems, setCartTotal } = useContext(StoreContext);
-  const [itemQuantity, setItemQuantity] = useState(item.quantity);
-
-  const itemIndex = cartItems.findIndex((i: any) => i.id === item.id);
 
   const handleRemoveItem = () => {
-    setCartItems([...cartItems].filter((i: any) => i.id !== item.id));
+    setCartItems([...cartItems].filter((i: ProductType) => i.id !== item.id));
   }
 
   useEffect(() => {
-    setCartTotal(cartItems.reduce((acc: any, item: any) => acc + item.price * item.quantity, 0));
+    setCartTotal(cartItems.reduce((acc: any, item: ProductType) => acc + item.price * item.quantity!!, 0));
   })
   
   return (

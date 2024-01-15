@@ -4,6 +4,7 @@ import { useProducts } from "@/hooks/useProducts";
 import React, { useContext } from "react";
 import ProductCard from "./product-card";
 import styled from "styled-components";
+import { ProductType } from "@/types";
 
 const ListContainer = styled.ul`
   display: flex;
@@ -80,13 +81,10 @@ function ProductsList() {
           <h3>Digite algum termo de pesquisa ou escolha uma categoria</h3>
         </NoSearchContainer>
       ) : (
-        products?.map((product: any) => (
+        products?.map((product: ProductType) => (
           <ProductCard
             key={product.id}
-            name={product.title}
-            price={product.price}
-            photo={product.thumbnail}
-            id={product.id}
+            product={product}
           />
         ))
       )}

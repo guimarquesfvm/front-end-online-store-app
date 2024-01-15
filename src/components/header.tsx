@@ -5,10 +5,6 @@ import SearchInput from "./search-input";
 import CartControl from "./cart-control";
 import { useRouter } from "next/navigation";
 
-interface HeaderProps {
-  
-}
-
 const TagHeader = styled.header`
   display: flex;
   align-items: center;
@@ -28,7 +24,7 @@ const CartWrapper = styled.div`
   cursor: pointer;
 `
 
-export default function Header(props: HeaderProps) {
+export default function Header() {
   const router = useRouter();
   const handleNavigateHome = () => {
     router.push("/")
